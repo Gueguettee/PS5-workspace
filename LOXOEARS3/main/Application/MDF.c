@@ -57,6 +57,7 @@
   #define BLINK_GPIO (7)
   #define GPIO_TEST1 (4)
   #define GPIO_TEST2 (5) 
+  #define GPIO_TEST3 (6)
 
 #endif 
 
@@ -116,6 +117,10 @@ void MDF_Task(void* pvParameters){
   gpio_reset_pin(GPIO_TEST2);
   gpio_set_direction(GPIO_TEST2, GPIO_MODE_OUTPUT);
   gpio_set_level(GPIO_TEST2, 0);
+
+  gpio_reset_pin(GPIO_TEST3);
+  gpio_set_direction(GPIO_TEST3, GPIO_MODE_OUTPUT);
+  gpio_set_level(GPIO_TEST3, 0);
 
   I2S_RecordTask((CHAN_FRAME+CHAN_FRAME2), dataRL);
     /* for (int i = 0; i < 2; i++) {
@@ -205,7 +210,7 @@ void MDF_Task(void* pvParameters){
     //Store the found frequency in circular buffer 
     freqBuff[index] = frequency[LEFT] * FREQUENCY_RES + MIN_FREQUENCY;
         
-     printf("%d\n", freqBuff[index]);
+    printf("%d\n", freqBuff[index]);
 
     //maybe harmonic ?
     if((freqBuff[index] >= 750) && (freqBuff[index] < 1500)){
@@ -233,12 +238,14 @@ void MDF_Task(void* pvParameters){
       pStrip_a->set_pixel(pStrip_a, 0, 50, 0, 0);
       /* Refresh the strip to send data */
       pStrip_a->refresh(pStrip_a, 100);
+      gpio_set_level(GPIO_TEST3, 1);
     }
     else if(!maintainFlag){
       /* Set the LED pixel using RGB from 0 (0%) to 255 (100%) for each color */
       pStrip_a->set_pixel(pStrip_a, 0, 0, 0, 5);
       /* Refresh the strip to send data */
       pStrip_a->refresh(pStrip_a, 100);
+      gpio_set_level(GPIO_TEST3, 0);
     }
     
     //Next index in circular buffer 

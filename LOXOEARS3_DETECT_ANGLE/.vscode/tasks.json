@@ -9,7 +9,7 @@
                 "command": "${config:idf.pythonBinPathWin} ${config:idf.espIdfPathWin}\\tools\\idf.py build",
                 "options": {
                     "env": {
-                        "PATH": "${env:PATH};${config:idf.customExtraPaths}"
+                        "PATH": "${env:PATH};${config:idf.>>customExtraPaths}"
                     }
                 }
             },
