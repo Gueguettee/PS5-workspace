@@ -4,5 +4,6 @@
     "idf.openOcdConfigs": [
         "board/esp32c3-ftdi.cfg"
     ],
-    "idf.flashType": "UART"
+    "idf.flashType": "UART",
+    "cmake.sourceDirectory": "D:/git/PS5-workspace/LOXOEARS2"
 }

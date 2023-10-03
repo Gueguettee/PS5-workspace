@@ -55,8 +55,8 @@
 
 #elif defined(DEVKITC_BOARD)
   #define BLINK_GPIO (7)
-  #define GPIO_TEST1 (4)
-  #define GPIO_TEST2 (5) 
+  //#define GPIO_TEST1 (4)
+  //#define GPIO_TEST2 (5) 
   #define GPIO_TEST3 (6)
 
 #endif 
@@ -109,14 +109,14 @@ void MDF_Task(void* pvParameters){
   xLastWakeTime = xTaskGetTickCount();
 
   //Configure gpios for logic analyzer test (comment for final use)
-  gpio_reset_pin(GPIO_TEST1);
-  gpio_set_direction(GPIO_TEST1, GPIO_MODE_OUTPUT);
-  gpio_set_level(GPIO_TEST1, 0);
+  //gpio_reset_pin(GPIO_TEST1);
+  //gpio_set_direction(GPIO_TEST1, GPIO_MODE_OUTPUT);
+  //gpio_set_level(GPIO_TEST1, 0);
 
   
-  gpio_reset_pin(GPIO_TEST2);
-  gpio_set_direction(GPIO_TEST2, GPIO_MODE_OUTPUT);
-  gpio_set_level(GPIO_TEST2, 0);
+  //gpio_reset_pin(GPIO_TEST2);
+  //gpio_set_direction(GPIO_TEST2, GPIO_MODE_OUTPUT);
+  //gpio_set_level(GPIO_TEST2, 0);
 
   gpio_reset_pin(GPIO_TEST3);
   gpio_set_direction(GPIO_TEST3, GPIO_MODE_OUTPUT);
@@ -147,7 +147,7 @@ void MDF_Task(void* pvParameters){
     long long int Timer1 = xTaskGetTickCount();
     //printf("Timer: %lld us\n" , Timer1);
    // vTaskDelayUntil(&xLastWakeTime,cDelay1ms);
-    gpio_set_level(GPIO_TEST2, 1);
+    //gpio_set_level(GPIO_TEST2, 1);
     long long int Timer2 = xTaskGetTickCount();
     //printf("Timer: %lld us\n" , Timer2);
     float diff = Timer2 - Timer1;
@@ -211,6 +211,7 @@ void MDF_Task(void* pvParameters){
     freqBuff[index] = frequency[LEFT] * FREQUENCY_RES + MIN_FREQUENCY;
         
     printf("%d\n", freqBuff[index]);
+    canSendOnce();
 
     //maybe harmonic ?
     if((freqBuff[index] >= 750) && (freqBuff[index] < 1500)){
@@ -230,7 +231,7 @@ void MDF_Task(void* pvParameters){
     }
 
     //Just for the speed test
-    gpio_set_level(GPIO_TEST2, 0);
+    //gpio_set_level(GPIO_TEST2, 0);
 
     if(checkSiren(freqBuff, index)){
       /* Set the LED pixel using RGB from 0 (0%) to 255 (100%) for each color */

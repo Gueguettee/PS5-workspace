@@ -70,9 +70,9 @@ int can_init(uint8_t DBCS_ID)
 
     //Install TWAI driver
     if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK) {
-        //printf("Driver installed\n");
+        printf("Driver installed\n");
     } else {
-        //printf("Failed to install driver\n");
+        printf("Failed to install driver\n");
         return CAN_CRITICAL_ERROR;
     }
 
@@ -80,17 +80,17 @@ int can_init(uint8_t DBCS_ID)
     //Reconfigure alerts to detect Error Passive and Bus-Off error states
     uint32_t alerts_to_enable = ALERTS_TO_ENABLE;
     if (twai_reconfigure_alerts(alerts_to_enable, NULL) == ESP_OK) {
-        //printf("Alerts reconfigured\n");
+        printf("Alerts reconfigured\n");
     } else {
-        //printf("Failed to reconfigure alerts");
+        printf("Failed to reconfigure alerts");
         return CAN_CRITICAL_ERROR;
     }
 
     //Start TWAI driver
     if (twai_start() == ESP_OK) {
-        //printf("Driver started\n");
+        printf("Driver started\n");
     } else {
-        //printf("Failed to start driver\n");
+        printf("Failed to start driver\n");
         return CAN_CRITICAL_ERROR;
     }
 
@@ -106,27 +106,27 @@ int can_receive_data(CAN_Message_t* messageRX, Positions_array_t* positions)
         identifierRX.CAN_ID_MESSAGE = message.identifier;
         *messageRX = identifierRX.message;
         if (message.extd) {
-            //printf("Message is in Extended Format\n");
+            printf("Message is in Extended Format\n");
         } else {
             return CAN_RECEIVE_ERROR;
         }
-        //printf("ID is %x\n", message.identifier);
+        printf("ID is %lx\n", message.identifier);
         if (message.data_length_code != 0) {
             for (int i = 0; i < message.data_length_code; i++) {
-                //printf("Data byte %d = %d\n", i, message.data[i]);
+                printf("Data byte %d = %d\n", i, message.data[i]);
             }
             if(message.data_length_code == DATA_BYTE_NBR)
             {
                 (*positions)[message.data[0]] = message.data[2] + (message.data[1] << 8);
             } else {
-                //printf("Data received has other than 2 bytes...\n");
+                printf("Data received has other than 2 bytes...\n");
             }
         } else {
-            //printf("Message without data received\n");
+            printf("Message without data received\n");
         }
         return CAN_MESSAGE_RX;
     } else {
-        //printf("Failed to receive message\n");
+        printf("Failed to receive message\n");
         return CAN_RECEIVE_ERROR;
     }
 }
@@ -135,9 +135,9 @@ int can_send(twai_message_t messageTX)
 {
     //Queue message for transmission
     if (twai_transmit(&messageTX, pdMS_TO_TICKS(WAIT_TIME_MS)) == ESP_OK) {
-        //printf("Message queued for transmission\n");            
+        printf("Message queued for transmission\n");            
     } else {
-        //printf("Failed to queue message for transmission\n");
+        printf("Failed to queue message for transmission\n");
         return CAN_QUEUING_ERROR;
     }
     return CAN_OK;
@@ -206,15 +206,15 @@ int can_handle_alerts(uint16_t status_errors, CAN_Message_t* messageRX)
     {
         if((alerts_triggered & TWAI_ALERT_TX_SUCCESS) != 0)
         {
-            //printf("Message sent succesfully !\n");
+            printf("Message sent succesfully !\n");
         }
         if((alerts_triggered & TWAI_ALERT_TX_IDLE) != 0)
         {
-            //printf("Queue emptied\n");
+            printf("Queue emptied\n");
         }
         if((alerts_triggered & TWAI_ALERT_TX_FAILED) != 0)
         {
-            //printf("Error while attempting to send message...\n");
+            printf("Error while attempting to send message...\n");
             status_errors |= CAN_SEND_ERROR;
         }
         /* if((alerts_triggered & TWAI_ALERT_RX_DATA) != 0)
