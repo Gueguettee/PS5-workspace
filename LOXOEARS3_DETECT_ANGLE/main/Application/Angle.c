@@ -84,13 +84,15 @@ void Angle(void* pvParameters){
   
   xLastWakeTime = xTaskGetTickCount();
   while(1){
-    //canInit();
+    canInit();
      //vTaskDelayUntil(&xLastWakeTime,500);
      twai_receive(&rx_msg, 110);
-     /* printf("Data received at pos 0 : %X \n",rx_msg.data[0]);
+     printf("Data received at pos 0 : %X \n",rx_msg.data[0]);
      printf("Data received at pos 1 : %X \n",rx_msg.data[1]);
      printf("Data received at pos 3 : %X \n",rx_msg.data[2]);
-     printf("Data received at pos 4 : %X \n",rx_msg.data[3]); */
+     printf("Data received at pos 4 : %X \n",rx_msg.data[3]);
+
+  canSendOnce();
 
   if (rx_msg.data[0] == 1){
     Tableau[0]= xTaskGetTickCount();//Save the arrival time of Mic 1

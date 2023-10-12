@@ -46,8 +46,8 @@ static void calcul_Angle(void);
 
 #elif defined(DEVKITC_BOARD)
   #define BLINK_GPIO (7)
-  #define GPIO_TEST1 (4)
-  #define GPIO_TEST2 (5) 
+  //#define GPIO_TEST1 (4)
+  //#define GPIO_TEST2 (5) 
 
 #endif 
 

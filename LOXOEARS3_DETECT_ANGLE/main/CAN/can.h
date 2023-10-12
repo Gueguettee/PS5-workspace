@@ -20,8 +20,8 @@
 
 #include "types.h"
 
-#define GPIO_CAN_TX 9 //Will be changed to 9 after HW modification
-#define GPIO_CAN_RX 8
+#define GPIO_CAN_TX 5 //Will be changed to 9 after HW modification
+#define GPIO_CAN_RX 4
 
 #define CAN_OK              0x0000  //Everything set/sent/received as intended
 #define CAN_CRITICAL_ERROR  0x0001  //Error used when twai driver not starting, alerts not configurable or anything else
